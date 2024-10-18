@@ -10,6 +10,7 @@ app.use(express.urlencoded({
 app.use(express.json())
 app.use(cors({credentials: true, origin: "http://localhost:3000"}))
 
+db.sync()
 iniModules(app)
 
 module.exports = app
