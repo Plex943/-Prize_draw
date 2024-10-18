@@ -74,7 +74,7 @@ module.exports = class EventController {
     static async Dashboard(req, res) {
         const events = await eventservices.GetAllEvents(req, res)
         if (!events) {
-            res.status(404).json({message: "Eventos não encontrados!"})
+            res.status(404).json({message: "Você não tem nenhum evento!"})
             return
         }
         res.status(200).json({message: "Todos os Eventos", events})
@@ -90,4 +90,40 @@ module.exports = class EventController {
             return
         }
     }
+
+    static async GetEvent(req, res) {
+        const event = await eventservices.GetEvent(req)
+        if (!event) {
+            res.status(404).json({message: "Evento não encontrado ou não existe!"})
+            return
+        }
+
+        res.status(200).json({message: `Evento: ${event.name}`, event})
+    }
+
+    static async JoinEvent(req, res) {
+        const joinEvent = await eventservices.JoinEvent(req, res)
+        if (joinEvent) {
+            res.status(201).json({message: `Tornou-se Lojista de: ${joinEvent.name}`})
+        } else {
+            res.status(404).json({message: "Esse evento não existe!"})
+            return
+        }
+    }
+
+    static async ParticipateEvents(req, res) {
+        const events = await eventservices.PartcipateEvents(req, res)
+        if (!events) {
+            res.status(404).json({message: "Você não é lojista de nenhum Sorteio!"})
+            return
+        }
+
+        res.status(200).json({message: "Todos os sorteios que você faz parte!", events})
+    }
+
+    static async ExitEvent(req, res) {
+        const exit = await eventservices.ExitEvent(req, res)
+        res.status(200).json({message: "Saiu do sorteio com sucesso!"})
+    }
+
 }
