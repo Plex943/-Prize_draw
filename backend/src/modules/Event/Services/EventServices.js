@@ -91,6 +91,9 @@ module.exports = class EventServices {
         if (!event) {
             return undefined
         }
+        if (!event.state) {
+            return "EventFinish"
+        }
         const token = await helpers.getUserToken(req)
         const user = await helpers.getUserByToken(token, res)
 
@@ -127,6 +130,16 @@ module.exports = class EventServices {
         const exit = await EventUser.destroy({where: {UserId: user.id, EventId: id}})
         console.log(exit)
         
+        return true
+    }
+
+    async FinishEvent(req, res) {
+        const eventId = req.params.eventId
+        const event = await Event.findOne({where: {id: eventId}})
+        if (!eventId || !event) {
+            return "notEvent"
+        }
+        await event.update({state: false})
         return true
     }
 

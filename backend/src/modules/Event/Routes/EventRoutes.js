@@ -16,6 +16,7 @@ router.get("/dashboard", helpers.verifyAdmToken, EventController.Dashboard)
 router.get("/:id", helpers.verifyAdmToken, EventController.GetEvent)
 router.post("/add", helpers.verifyAdmToken, EventController.AddEvent)
 router.patch("/edit", helpers.verifyAdmToken, EventController.EditEvent)
+router.patch("/end/:eventId", helpers.verifyAdmToken,  EventController.FinishiEvent)
 router.delete("/remove", helpers.verifyAdmToken, EventController.DeleteEvent)
 
 module.exports = router

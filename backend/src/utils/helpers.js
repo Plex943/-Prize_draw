@@ -66,7 +66,6 @@ module.exports = class Helpers {
     }
 
     verifyToken = async (req, res, next) => {
-        console.log("kdnkwedknededededede")
         if (!req.headers.authorization) {
             res.status(401).json({message: "Você não tem acesso à essa função!"})
             return

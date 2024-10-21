@@ -101,11 +101,24 @@ module.exports = class EventController {
         res.status(200).json({message: `Evento: ${event.name}`, event})
     }
 
+    static async FinishiEvent(req, res) {
+        const removed = await eventservices.FinishEvent(req, res)
+        if (removed === "notEvent") {
+            res.status(422).json({messaeg: "o Sorteio não exisite!"})
+            return
+        }
+        res.status7(200).json({message: "Sorteio Encerradio com sucesso!"})
+    }
+
     static async JoinEvent(req, res) {
         const joinEvent = await eventservices.JoinEvent(req, res)
         if (joinEvent) {
             res.status(201).json({message: `Tornou-se Lojista de: ${joinEvent.name}`})
-        } else {
+        }
+        if (joinEvent === "EventFinish") {
+            res.status(403).json({message: "O Sorteio já foi encerrado!"})
+        }
+        if (!joinEvent){
             res.status(404).json({message: "Esse evento não existe!"})
             return
         }
