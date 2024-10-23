@@ -53,16 +53,16 @@ module.exports = class TicketServices {
         const winner = await Client.findOne({where: {id: randomTicket.clientId}})   
         const shopkeeper = await User.findOne({where: {id: randomTicket.shopkeeperId}})
         const eventWinner = await Event.findOne({where: {id: randomTicket.eventId}})
-        return {winner, shopkeeper, event: eventWinner}
+        return {winner, shopkeeper, event: eventWinner, ticketsQTY: tickets.length}
     }
 
     async UpdateClient(req, res) {
-        const {name, telephone} = req.body
+        const {name, telephone, newTelephone} = req.body
         const client = await Client.findOne({where: {telephone: telephone}})
         if (!client) {
             return "noClient"
         }
-        await client.update({name, telephone})
+        await client.update({name, telephone: newTelephone})
     }
 
     async AllClients(req, res) {
@@ -71,5 +71,15 @@ module.exports = class TicketServices {
             return "noTickets"
         }
         return clients
+    }
+
+    async GetClient(req, res) {
+        const id = req.params.id
+        const client = await Client.findOne({where: {id:id}})
+        if (!client) {
+            return "noclient"
+        }
+
+        return client
     }
 }

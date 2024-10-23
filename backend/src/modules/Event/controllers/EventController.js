@@ -100,16 +100,24 @@ module.exports = class EventController {
 
         res.status(200).json({message: `Evento: ${event.name}`, event})
     }
-
-    static async FinishiEvent(req, res) {
-        const removed = await eventservices.FinishEvent(req, res)
+    
+    static async HandleEventState(req, res) {
+        const removed = await eventservices.HandleEventState(req, res)
+        
         if (removed === "notEvent") {
             res.status(422).json({messaeg: "o Sorteio não exisite!"})
             return
         }
-        res.status7(200).json({message: "Sorteio Encerradio com sucesso!"})
+        if (removed === "toFalse") {
+            res.status(200).json({message: "Sorteio Encerrado com sucesso!"})
+            return
+        }
+        if (removed === "toTrue") {
+            res.status(200).json({message: "Sorteio Iniciado com sucesso!"})
+            return
+        }
     }
-
+    
     static async JoinEvent(req, res) {
         const joinEvent = await eventservices.JoinEvent(req, res)
         if (joinEvent) {
@@ -138,5 +146,6 @@ module.exports = class EventController {
         const exit = await eventservices.ExitEvent(req, res)
         res.status(200).json({message: "Saiu do sorteio com sucesso!"})
     }
+
 
 }

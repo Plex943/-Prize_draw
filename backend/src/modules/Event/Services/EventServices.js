@@ -133,14 +133,19 @@ module.exports = class EventServices {
         return true
     }
 
-    async FinishEvent(req, res) {
+    async HandleEventState(req, res) {
         const eventId = req.params.eventId
         const event = await Event.findOne({where: {id: eventId}})
         if (!eventId || !event) {
             return "notEvent"
         }
-        await event.update({state: false})
-        return true
+        if (event.state === true) {
+            await event.update({state: false})
+            return "toFalse"
+        }
+        if (event.state === false) {
+            await event.update({state: true})
+            return "toTrue"
+        }
     }
-
 }

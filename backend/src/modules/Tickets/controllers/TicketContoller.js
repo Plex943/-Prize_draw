@@ -39,7 +39,8 @@ module.exports = class TicketController {
             message: "Informações do Vencedor: ", 
             winner: winnerInfo.winner,
             shopkeeper: winnerInfo.shopkeeper,
-            event: winnerInfo.event
+            event: winnerInfo.event,
+            ticketsQTY: winnerInfo.ticketsQTY
         })
     }
     
@@ -72,5 +73,15 @@ module.exports = class TicketController {
             return
         }
         res.status(200).json({message: "Todos os Clientes: ", clients})
+    }
+
+    static async GetClient(req, res) {
+        const client = await ticketservices.GetClient(req, res)
+        if ( client === "noclient") {
+            res.status(422).json({message: "Client não existe!"})
+            return
+        }
+
+        res.status(200).json({message: "Cliente: ", client})
     }
 }
