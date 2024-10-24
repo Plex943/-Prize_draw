@@ -1,0 +1,14 @@
+.paths_conteiner {
+    display: flex;
+    justify-content: center;
+
+    max-width: 100%;
+}
+
+.paths_conteiner h3 {
+    text-align: center;
+}
+
+.paths_conteiner li {
+    list-style:  none;
+}

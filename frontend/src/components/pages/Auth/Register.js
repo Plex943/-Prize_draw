@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import { Context } from "../../../context/UserContext";
 import Input from "../../form/Input";
+import styles from "../../form/Form.module.css"
 
 function Register() {
     const [user, setUser] = useState({})
@@ -16,7 +17,7 @@ function Register() {
     }
 
     return (
-        <section>
+        <section className={styles.form_conteiner}>
             <h3>
                 Registrar
             </h3>
@@ -51,6 +52,14 @@ function Register() {
                 type="password"
                 name="confirmpassword"
                 placeholder="digite a confirmação da senha..."
+                handleChange={handleChange}
+                />
+                
+                <Input
+                text="Adm"
+                type="text"
+                name="adm"
+                placeholder="digite o adm..."
                 handleChange={handleChange}
                 />
 

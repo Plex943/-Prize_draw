@@ -1,6 +1,7 @@
 import { useState, useContext } from "react"
 import Input from "../../form/Input"
 import {Context} from "../../../context/UserContext"
+import styles from "../../form/Form.module.css"
 
 function Login() {
     const [user, setUser] = useState({})
@@ -16,7 +17,7 @@ function Login() {
     }
 
     return (
-        <section>
+        <section className={styles.form_conteiner}>
             <h3>
                 Login
             </h3>
